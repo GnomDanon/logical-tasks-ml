@@ -25,19 +25,6 @@ def get_token(auth_token, scope='GIGACHAT_API_PERS'):
     except requests.RequestException as e:
         print(f"Ошибка: {str(e)}")
         return -1
-giga_token = ""
-def init_gigachat():
-    response = get_token(auth)
-    if response != 1:
-        giga_token = response.json()['access_token']
-
-        url = "https://gigachat.devices.sberbank.ru/api/v1/models"
-        payload={}
-        headers = {
-          'Accept': 'application/json',
-          'Authorization': f'Bearer {giga_token}'
-        }
-        response = requests.request("GET", url, headers=headers, data=payload, verify=False)
 
 def get_chat_completion(auth_token, user_message):
 
@@ -51,12 +38,9 @@ def get_chat_completion(auth_token, user_message):
                 "content": user_message
             }
         ],
-        "temperature": 0,  # Температура генерации
-        "top_p": 0,  # Параметр top_p для контроля разнообразия ответов
         "n": 1,  # Количество возвращаемых ответов
         "stream": False,  # Потоковая ли передача ответов
         "max_tokens": 2048,  # Максимальное количество токенов в ответе
-        "repetition_penalty": 1.2,  # Штраф за повторения
         "update_interval": 0  # Интервал обновления (для потоковой передачи)
     })
 
@@ -72,3 +56,21 @@ def get_chat_completion(auth_token, user_message):
     except requests.RequestException as e:
         print(f"Произошла ошибка: {str(e)}")
         return -1
+
+def refresh_token():
+    response = get_token(auth)
+    if response != 1:
+        print(response.text)
+        giga_token = response.json()['access_token']
+
+    url = "https://gigachat.devices.sberbank.ru/api/v1/models"
+
+    payload = {}
+    headers = {
+        'Accept': 'application/json',
+        'Authorization': f'Bearer {giga_token}'
+    }
+
+    response = requests.request("GET", url, headers=headers, data=payload, verify=False)
+    print(response.text)
+    return giga_token

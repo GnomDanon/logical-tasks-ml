@@ -43,13 +43,13 @@ def read_file(file_name):
         return f"Неизвестный формат файла: {file_name}"
 
 def uploadFile(file_name):
-    downloads_folder = os.path.expanduser('C:\\Users\\gfikb\\Downloads')
+    downloads_folder = os.path.expanduser('C:\\Users\\Daniil\\Downloads')
     file_path = os.path.join(downloads_folder, file_name)
     content = ""
     try:
         content = read_file(file_path)
         print(f"Содержимое файла {file_path}:")
-        print(content)
+        # print(content)
         print("\n" + "-"*40 + "\n")
         return content
     except Exception as e:

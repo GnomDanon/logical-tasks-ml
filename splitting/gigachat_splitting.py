@@ -17,10 +17,8 @@ def split_text_into_fragments(text, max_tokens=1024):
     return fragments
 
 
-def getFragments(text,intervals):
-    text = ("\n".join(getRequiredParagraphs([0,2,5],text,intervals)))
-
-    fragments = split_text_into_fragments(text, max_tokens=2048)
+def getFragments(paragraphs):
+    fragments = split_text_into_fragments(paragraphs, max_tokens=2048)
     for i, fragment in enumerate(fragments):
         print(f"Fragment {i + 1}:\n{fragment}\n")
     return fragments

@@ -1,1 +1,1 @@
-auth = "токин"
+auth = "<auth_token>"
